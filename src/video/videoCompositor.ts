@@ -33,22 +33,23 @@ export class VideoCompositor {
 
     this.resize();
     window.addEventListener('resize', () => this.resize());
+    window.addEventListener('orientationchange', () => window.setTimeout(() => this.resize(), 250));
+    if (this.canvas.parentElement && typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(() => this.resize()).observe(this.canvas.parentElement);
+    }
   }
 
   public resize(): void {
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
+    // Size follows the 9:16 frame (#app), not the whole window.
+    const host = this.canvas.parentElement;
+    this.width = host?.clientWidth || window.innerWidth;
+    this.height = host?.clientHeight || window.innerHeight;
 
-    // Cap at Full HD (1920x1080) with 1:1 pixel mapping for 60 FPS real-time hardware recording
-    let scale = 1;
-    if (this.width > 1920 || this.height > 1080) {
-      scale = Math.min(1920 / this.width, 1080 / this.height);
-    }
+    // Render up to 1080x1920 (crisp reels) but never more than 2x, to stay smooth on phones.
+    const scale = Math.min(1080 / this.width, 1920 / this.height, 2);
     this.canvas.width = Math.round(this.width * scale);
     this.canvas.height = Math.round(this.height * scale);
-    if (scale !== 1) {
-      this.ctx.setTransform(scale, 0, 0, scale, 0, 0);
-    }
+    this.ctx.setTransform(scale, 0, 0, scale, 0, 0);
   }
 
   public async startCamera(): Promise<MediaStream> {
@@ -57,10 +58,12 @@ export class VideoCompositor {
     }
 
     // Pinned to 640x480 for 5ms frame transfer latency & cold GPU/CPU
+    const isPhone = window.matchMedia('(pointer: coarse)').matches;
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
-        width: { ideal: 640 },
-        height: { ideal: 480 },
+        // Phones: ask for a portrait picture so the 9:16 frame is filled; desktops keep the fast 640x480.
+        width: { ideal: isPhone ? 720 : 640 },
+        height: { ideal: isPhone ? 1280 : 480 },
         facingMode: 'user'
       },
       audio: false

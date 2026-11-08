@@ -38,17 +38,33 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: var(--bg-dark);
+  overscroll-behavior: none;
+  background-color: #02060f;
   font-family: var(--font-ui);
   color: var(--text-main);
 }
 
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The whole experience lives in a 9:16 (reel / phone portrait) frame.
+   On a phone it fills the screen; on a desktop it is a centred portrait stage.
+   container-type lets the layout adapt to the frame width instead of the window. */
 #app {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  flex: none;
+  width: min(100vw, calc(100vh * 9 / 16));
+  height: min(100vh, calc(100vw * 16 / 9));
+  width: min(100vw, calc(100dvh * 9 / 16));
+  height: min(100dvh, calc(100vw * 16 / 9));
   overflow: hidden;
   background: var(--bg-gradient);
+  container-type: inline-size;
+  container-name: app;
+  box-shadow: 0 0 0 1px rgba(36, 167, 223, 0.18), 0 0 60px rgba(0, 74, 173, 0.25);
 }
 
 #webcam {
@@ -56,6 +72,7 @@ body {
 }
 
 #stage {
+  touch-action: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -417,7 +434,7 @@ body {
   display: none;
 }
 
-@media (max-width: 640px) {
+@container app (max-width: 640px) {
   .corner-left {
     display: none !important;
   }
@@ -706,7 +723,7 @@ body {
   background: linear-gradient(135deg, #5CC4EF 0%, #FB7D04 100%);
 }
 
-@media (max-width: 860px) {
+@container app (max-width: 860px) {
   .hud-container {
     padding: 0.75rem 1rem;
   }
@@ -762,7 +779,7 @@ body {
   padding: 2px;
 }
 
-@media (max-width: 640px) {
+@container app (max-width: 640px) {
   .odee-url {
     display: none;
   }
@@ -814,7 +831,7 @@ body {
    END CARD (clean, full screen)
    ============================================================ */
 .end-card {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 30;
   display: flex;
@@ -832,20 +849,19 @@ body {
 .end-card::after { inset: 3.4%; border: 1px solid rgba(255, 255, 255, 0.18); }
 
 .end-content { display: flex; flex-direction: column; align-items: center; gap: clamp(0.4rem, 1.4vh, 1rem); padding: clamp(28px, 6.5vh, 80px) 6% 0; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75); }
-.end-logo-link { display: block; background: #fff; padding: clamp(4px, 0.6vw, 10px) clamp(8px, 1vw, 16px); line-height: 0; }
+.end-logo-link { display: block; background: #fff; padding: clamp(4px, 1cqw, 10px) clamp(8px, 2cqw, 16px); line-height: 0; }
 .end-logo { height: clamp(56px, 12vh, 130px); width: auto; display: block; }
-.end-title { margin: clamp(0.2rem, 1vh, 0.8rem) 0 0; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(2rem, 6vw, 5rem); line-height: 1.1; color: #ffd698; letter-spacing: 0.01em; }
-.end-kannada { margin: 0; font-family: "Noto Sans Kannada", var(--font-ui); font-weight: 800; font-size: clamp(1.3rem, 4vw, 3.4rem); line-height: 1.25; color: #fff3dc; }
+.end-title { margin: clamp(0.2rem, 1vh, 0.8rem) 0 0; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(1.8rem, 11cqw, 4.4rem); line-height: 1.1; color: #ffd698; letter-spacing: 0.01em; }
+.end-kannada { margin: 0; font-family: "Noto Sans Kannada", var(--font-ui); font-weight: 800; font-size: clamp(1.2rem, 6.6cqw, 2.8rem); line-height: 1.25; color: #fff3dc; }
 .end-divider { width: clamp(120px, 22%, 420px); height: 1px; background: #b8864b; margin: clamp(0.2rem, 1vh, 0.8rem) 0; }
-.end-links { margin: 0; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.4rem clamp(0.8rem, 2vw, 2rem); font: 500 clamp(0.95rem, 2vw, 1.7rem) var(--font-ui); color: #fff3dc; }
+.end-links { margin: 0; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.4rem clamp(0.8rem, 3cqw, 2rem); font: 500 clamp(0.9rem, 3.6cqw, 1.45rem) var(--font-ui); color: #fff3dc; }
 .end-links a { color: #fff3dc; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s ease; }
 .end-links a:hover { border-bottom-color: #ffd698; }
 .end-sep { opacity: 0.7; }
 
-.end-diya { position: absolute; bottom: 14%; width: clamp(54px, 10vw, 200px); height: auto; pointer-events: none; }
-.end-diya.left { left: 9.5%; }
-.end-diya.right { right: 9.5%; }
-@media (max-width: 640px) { .end-diya { bottom: 6%; width: 17vw; } .end-diya.left { left: 7%; } .end-diya.right { right: 7%; } }
+.end-diya { position: absolute; bottom: 7%; width: clamp(50px, 16cqw, 140px); height: auto; pointer-events: none; }
+.end-diya.left { left: 8%; }
+.end-diya.right { right: 8%; }
 
 /* While the end card is open, tuck the controls away so the card, fireworks and camera are unobstructed */
 body:has(.end-card:not(.hidden)) .hud-container,
@@ -853,4 +869,14 @@ body:has(.end-card:not(.hidden)) .corner-credits {
   opacity: 0;
   pointer-events: none !important;
   transition: opacity 0.4s ease;
+}
+
+/* Phone-width frame: two-row header so every control fits */
+@container app (max-width: 560px) {
+  .hud-container { padding: 0.75rem 0.75rem; }
+  .hud-header { flex-wrap: wrap; gap: 0.55rem; }
+  .header-actions { order: 3; width: 100%; justify-content: center; gap: 0.5rem; }
+  .action-btn { padding: 0.42rem 0.8rem; }
+  .write-tools { top: 8.4rem; width: calc(100% - 1.5rem); }
+  .write-hint { font-size: 0.72rem; }
 }
