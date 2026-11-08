@@ -2,7 +2,7 @@
 
 ## 1. System Overview
 
-Fireworks Conductor is a client-side web application that turns hand gestures into authentic Diwali fireworks overlaid on real-time webcam video. It executes entirely in the browser with zero external backend dependencies.
+Fireworks Conductor is a client-side web application that turns hand gestures into authentic Deepawali fireworks overlaid on real-time webcam video. It executes entirely in the browser with zero external backend dependencies.
 
 ```mermaid
 flowchart TD
@@ -63,5 +63,5 @@ flowchart TD
 - **MediaStreamDestination:** Web Audio destination node mixed directly into the recording track.
 - **Canvas Capture:** `canvas.captureStream(30)`.
 - **Format:** `video/webm;codecs=vp9,opus` with fallback to `video/webm`.
-- **Screenshot:** Native canvas `toBlob('image/png')` with optional festive gold watermark ("✨ Happy Diwali ✨").
+- **Screenshot:** Native canvas `toBlob('image/png')` with optional festive gold watermark ("✨ Happy Deepawali ✨").
 - **Creator Mode (`H` hotkey):** Hides all UI overlays, allowing clean performance recordings for video reels.

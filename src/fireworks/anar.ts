@@ -4,7 +4,7 @@ import { COLORS } from './fireworkColors';
 
 /**
  * 4-Tier Volcanic Anar Engine
- * Authentically replicates a high-grade Indian Diwali flowerpot:
+ * Authentically replicates a high-grade Indian Deepawali flowerpot:
  * 1. Blinding white-hot molten throat jet
  * 2. Dense towering sodium gold vertical plume
  * 3. Graceful weeping willow umbrella canopy drooping under gravity

@@ -146,7 +146,7 @@ export class CaptureEngine {
     a.href = this.latestVideoUrl;
     const now = new Date();
     const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, 19);
-    a.download = filename || `Diwali-Fireworks-${timestamp}.${this.selectedExtension}`;
+    a.download = filename || `Deepawali-Fireworks-${timestamp}.${this.selectedExtension}`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -170,7 +170,7 @@ export class CaptureEngine {
     tCtx.font = `bold ${Math.max(22, tempCanvas.width * 0.024)}px "Cinzel", serif`;
     const w = tempCanvas.width;
     const h = tempCanvas.height;
-    tCtx.fillText('✨ Happy Deepavali ✨', w - pad, h - pad - 64);
+    tCtx.fillText('✨ Happy Deepawali ✨', w - pad, h - pad - 64);
     tCtx.shadowBlur = 8;
     tCtx.fillStyle = '#FFFFFF';
     tCtx.font = `800 ${Math.max(16, w * 0.017)}px "Noto Sans Kannada", sans-serif`;
@@ -209,7 +209,7 @@ export class CaptureEngine {
       a.href = url;
       const now = new Date();
       const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, 19);
-      a.download = `Diwali-Postcard-${timestamp}.png`;
+      a.download = `Deepawali-Postcard-${timestamp}.png`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

@@ -1,6 +1,6 @@
 /**
  * Authentic Pyrotechnics Audio Engine
- * Loads and plays real recorded Diwali firecracker samples with zero latency,
+ * Loads and plays real recorded Deepawali firecracker samples with zero latency,
  * pitch randomization, smooth looping, and heavy aerial blast synthesis.
  */
 

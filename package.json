@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Turn your hands into authentic Diwali fireworks using fast MediaPipe hand tracking, GPU-blended particle physics, procedural Web Audio pyrotechnics, and in-browser reel recording.",
+  "description": "Turn your hands into authentic Deepawali fireworks using fast MediaPipe hand tracking, GPU-blended particle physics, procedural Web Audio pyrotechnics, and in-browser reel recording.",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

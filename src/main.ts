@@ -310,7 +310,7 @@ class FireworksApp {
       h
     );
 
-    // After 1.4 seconds of rockets filling the sky, display the majestic "HAPPY DIWALI" centerpiece!
+    // After 1.4 seconds of rockets filling the sky, display the majestic "HAPPY DEEPAWALI" centerpiece!
     window.clearTimeout(this.finaleTimeout);
     this.finaleTimeout = window.setTimeout(() => {
       this.finaleCenter.classList.remove('hidden');
