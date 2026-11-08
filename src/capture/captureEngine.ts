@@ -161,7 +161,7 @@ export class CaptureEngine {
     const pad = tempCanvas.width * 0.035;
     tCtx.save();
     tCtx.textAlign = 'right';
-    tCtx.fillStyle = '#FFD700';
+    tCtx.fillStyle = '#24A7DF';
     tCtx.shadowColor = 'rgba(255, 215, 0, 0.8)';
     tCtx.shadowBlur = 15;
     tCtx.font = `bold ${Math.max(22, tempCanvas.width * 0.024)}px "Cinzel", serif`;
