@@ -66,6 +66,10 @@
 
           <!-- Minimal Controls: Only Sound & Record -->
           <div class="header-actions">
+            <button id="btn-write" class="action-btn" title="Write in the air (W)">
+              <span class="btn-icon">✍️</span>
+              <span class="btn-label">Write</span>
+            </button>
             <button id="btn-audio" class="action-btn" title="Toggle Sound (M)">
               <span class="btn-icon">🔊</span>
               <span class="btn-label">Sound</span>
@@ -77,6 +81,19 @@
             </button>
           </div>
         </header>
+
+        <!-- Air-writing toolbar (visible only in Write mode) -->
+        <div id="write-tools" class="write-tools hidden">
+          <p class="write-hint">Point your <strong>index finger</strong> or hold a <strong>pencil</strong> (pinch grip) to write</p>
+          <div class="write-row">
+            <button type="button" class="ink-dot active" data-ink="0" title="Sky ink" style="--ink:#24A7DF"></button>
+            <button type="button" class="ink-dot" data-ink="1" title="Orange ink" style="--ink:#FB7D04"></button>
+            <button type="button" class="ink-dot" data-ink="2" title="Green ink" style="--ink:#11A86F"></button>
+            <button type="button" class="ink-dot" data-ink="3" title="White ink" style="--ink:#FFFFFF"></button>
+            <button type="button" id="btn-write-undo" class="write-mini" title="Undo last stroke (Z)">Undo</button>
+            <button type="button" id="btn-write-clear" class="write-mini" title="Clear writing (X)">Clear</button>
+          </div>
+        </div>
 
         <!-- Colorful, Vibrant Gesture Guide Dock -->
         <footer class="hud-footer">

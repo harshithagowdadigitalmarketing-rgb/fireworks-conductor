@@ -4,6 +4,7 @@ import { VisionEngine } from './vision/visionEngine';
 import { FireworkDirector } from './fireworks/fireworkDirector';
 import { PyroAudioEngine } from './audio/pyroAudioEngine';
 import { CaptureEngine } from './capture/captureEngine';
+import { WritingEngine } from './writing/writingEngine';
 
 class FireworksApp {
   private compositor: VideoCompositor;
@@ -11,6 +12,7 @@ class FireworksApp {
   private director: FireworkDirector;
   private audio: PyroAudioEngine;
   private capture: CaptureEngine;
+  private writing: WritingEngine = new WritingEngine();
 
   // DOM Elements
   private hudElement: HTMLElement;
@@ -146,6 +148,30 @@ class FireworksApp {
     };
     this.audioBtn.addEventListener('click', toggleAudio);
 
+    // 3b. Air-writing mode (W key): write with finger / pencil, mouse as fallback
+    const writeBtn = document.getElementById('btn-write') as HTMLElement;
+    const writeTools = document.getElementById('write-tools') as HTMLElement;
+    const inkDots = Array.from(document.querySelectorAll<HTMLElement>('.ink-dot'));
+    const syncInk = () => inkDots.forEach((d) => d.classList.toggle('active', Number(d.dataset.ink) === this.writing.colorIndex));
+    const toggleWrite = () => {
+      this.writing.setEnabled(!this.writing.enabled);
+      writeBtn.classList.toggle('btn-active', this.writing.enabled);
+      writeTools.classList.toggle('hidden', !this.writing.enabled);
+      this.compositor.canvas.classList.toggle('writing-cursor', this.writing.enabled);
+    };
+    writeBtn.addEventListener('click', toggleWrite);
+    inkDots.forEach((d) => d.addEventListener('click', () => { this.writing.setColor(Number(d.dataset.ink)); syncInk(); }));
+    document.getElementById('btn-write-undo')?.addEventListener('click', () => this.writing.undo());
+    document.getElementById('btn-write-clear')?.addEventListener('click', () => this.writing.clear());
+    const stage = this.compositor.canvas;
+    const toCanvas = (e: PointerEvent) => {
+      const r = stage.getBoundingClientRect();
+      return { x: ((e.clientX - r.left) / r.width) * this.compositor.width, y: ((e.clientY - r.top) / r.height) * this.compositor.height };
+    };
+    stage.addEventListener('pointerdown', (e) => { const p = toCanvas(e); this.writing.pointerDown(p.x, p.y); });
+    stage.addEventListener('pointermove', (e) => { const p = toCanvas(e); this.writing.pointerMove(p.x, p.y); });
+    window.addEventListener('pointerup', () => this.writing.pointerUp());
+
     // 4. Postcard Screenshot (S key)
     const takeSnap = () => {
       this.capture.takeScreenshot();
@@ -230,6 +256,12 @@ class FireworksApp {
       if (e.key === 'm' || e.key === 'M') toggleAudio();
       if (e.key === 's' || e.key === 'S') takeSnap();
       if (e.key === 'r' || e.key === 'R') toggleRecording();
+      if (e.key === 'w' || e.key === 'W') toggleWrite();
+      if (this.writing.enabled) {
+        if (e.key === 'x' || e.key === 'X') this.writing.clear();
+        if (e.key === 'z' || e.key === 'Z') this.writing.undo();
+        if (e.key === 'c' || e.key === 'C') { this.writing.cycleColor(); syncInk(); }
+      }
 
       // Manual Testing Keys (1 to 6)
       const w = this.compositor.width;
@@ -315,14 +347,17 @@ class FireworksApp {
       this.compositor.height
     );
 
-    // Check if Grand Finale was recognized by gesture
-    const isFinale = activeGestures.some((g) => g.type === 'GRAND_FINALE');
+    // Feed hands to the air-writing engine (finger / pencil)
+    this.writing.update(this.vision.detectedHands, this.compositor.video, this.compositor.width, this.compositor.height, now);
+
+    // Check if Grand Finale was recognized by gesture (suppressed while writing)
+    const isFinale = !this.writing.enabled && activeGestures.some((g) => g.type === 'GRAND_FINALE');
     if (isFinale) {
       this.triggerGrandFinale(this.compositor.width, this.compositor.height);
     } else {
-      // 3. Dispatch other active gestures to Firework Director
+      // 3. Dispatch other active gestures to Firework Director (none while writing)
       this.director.handleGestures(
-        activeGestures,
+        this.writing.enabled ? [] : activeGestures,
         this.compositor.width,
         this.compositor.height
       );
@@ -330,6 +365,9 @@ class FireworksApp {
 
     // 4. Simulate & Render Particle Fireworks with Additive Blending & Lighting
     this.director.updateAndRender(dt, this.compositor.ctx);
+
+    // 4b. Draw written ink on top of fireworks (included in screenshots & recordings)
+    this.writing.render(this.compositor.ctx);
 
     // 5. Draw Debug skeleton if active
     this.vision.drawDebugSkeleton(this.compositor.ctx);
