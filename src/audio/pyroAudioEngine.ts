@@ -68,16 +68,16 @@ export class PyroAudioEngine {
     if (!this.ctx) return;
 
     const files: Record<string, string> = {
-      ROCKET_WHISTLE: '/audio/rocket-whistle.mp3',
-      ROCKET_EXPLOSION: '/audio/rocket-explosion.mp3',
-      STARBURST: '/audio/starburst.mp3',
-      HEAVY_EXPLOSION: '/audio/heavy-explosion-hit.mp3',
-      THUNDER_CRACK: '/audio/thunder-crack.mp3',
-      AERIAL_BURST: '/audio/aerial-shell-burst.mp3',
-      ROMAN_POP: '/audio/roman-pop.mp3',
-      ANAR: '/audio/anar-fountain.mp3',
-      SPARKLER: '/audio/sparkler.mp3',
-      FINALE: '/audio/finale-barrage.mp3'
+      ROCKET_WHISTLE: `${import.meta.env.BASE_URL}audio/rocket-whistle.mp3`,
+      ROCKET_EXPLOSION: `${import.meta.env.BASE_URL}audio/rocket-explosion.mp3`,
+      STARBURST: `${import.meta.env.BASE_URL}audio/starburst.mp3`,
+      HEAVY_EXPLOSION: `${import.meta.env.BASE_URL}audio/heavy-explosion-hit.mp3`,
+      THUNDER_CRACK: `${import.meta.env.BASE_URL}audio/thunder-crack.mp3`,
+      AERIAL_BURST: `${import.meta.env.BASE_URL}audio/aerial-shell-burst.mp3`,
+      ROMAN_POP: `${import.meta.env.BASE_URL}audio/roman-pop.mp3`,
+      ANAR: `${import.meta.env.BASE_URL}audio/anar-fountain.mp3`,
+      SPARKLER: `${import.meta.env.BASE_URL}audio/sparkler.mp3`,
+      FINALE: `${import.meta.env.BASE_URL}audio/finale-barrage.mp3`
     };
 
     for (const [key, url] of Object.entries(files)) {

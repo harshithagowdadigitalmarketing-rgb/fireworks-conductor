@@ -10,10 +10,10 @@ import {
 } from './gestureTypes';
 import { GestureClassifier } from './gestureClassifier';
 
-const LOCAL_WASM = '/wasm';
+const LOCAL_WASM = `${import.meta.env.BASE_URL}wasm`;
 const CDN_WASM = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.35/wasm';
 
-const LOCAL_MODEL = '/models/hand_landmarker.task';
+const LOCAL_MODEL = `${import.meta.env.BASE_URL}models/hand_landmarker.task`;
 const CDN_MODEL =
   'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task';
 

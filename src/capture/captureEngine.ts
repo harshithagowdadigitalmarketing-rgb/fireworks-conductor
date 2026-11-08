@@ -27,7 +27,7 @@ export class CaptureEngine {
 
   constructor(canvas: HTMLCanvasElement, callbacks?: CaptureCallbacks) {
     this.canvas = canvas;
-    this.logo.src = '/images/odee-logo-wide.png';
+    this.logo.src = `${import.meta.env.BASE_URL}images/odee-logo-wide.png`;
     if (callbacks) this.callbacks = callbacks;
   }
 
