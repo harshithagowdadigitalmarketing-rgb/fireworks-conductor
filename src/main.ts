@@ -22,7 +22,10 @@ class FireworksApp {
   private recordLabel: HTMLElement;
   private recordTimer: HTMLElement;
   private finaleCenter: HTMLElement;
-  private finaleTimeout: number = 0;
+  private endCardTimer: number = 0;
+  private endCardForHold: number = -1;
+  private lastCelebration: number = 0;
+  private static readonly NAMASTE_CARD_MS = 3000;
 
   // Fog-Mirror Style Reel Preview Elements
   private reelPreviewCard: HTMLElement;
@@ -286,6 +289,9 @@ class FireworksApp {
         this.director.handleGestures([{ type: 'PHOOLJHADI', confidence: 1, triggerPoint: center, handIndex: 0, isContinuous: true }], w, h);
       } else if (e.key === '6') {
         this.triggerGrandFinale(w, h);
+        // Keyboard test path: mimic holding Namaste for 3 seconds
+        window.clearTimeout(this.endCardTimer);
+        this.endCardTimer = window.setTimeout(() => this.showEndCard(), FireworksApp.NAMASTE_CARD_MS);
       }
     });
 
@@ -315,17 +321,20 @@ class FireworksApp {
       w,
       h
     );
+  }
 
-    // Let the rockets light the sky first, then show the clean Happy Deepavali end card
-    window.clearTimeout(this.finaleTimeout);
-    this.finaleTimeout = window.setTimeout(() => {
-      this.finaleCenter.classList.remove('hidden');
-
-      // Keep the end card up long enough to read it and click the ODEE links, then fade out
-      window.setTimeout(() => {
-        this.finaleCenter.classList.add('hidden');
-      }, 15000);
-    }, 4500);
+  /** Shows the ODEE end card and hides it again after 15s (long enough to click the links). */
+  private showEndCard(): void {
+    if (this.finaleCenter.classList.contains('hidden')) {
+      // Fresh grand barrage as the card appears; steady celebration continues while it is up
+      this.triggerGrandFinale(this.compositor.width, this.compositor.height);
+      this.lastCelebration = performance.now();
+    }
+    this.finaleCenter.classList.remove('hidden');
+    window.clearTimeout(this.endCardTimer);
+    this.endCardTimer = window.setTimeout(() => {
+      this.finaleCenter.classList.add('hidden');
+    }, 15000);
   }
 
   private async init(): Promise<void> {
@@ -353,6 +362,18 @@ class FireworksApp {
       this.compositor.height
     );
 
+    // End card: show it once Namaste has been held for 3 seconds (once per hold)
+    const namasteSince = this.vision.namasteSince;
+    if (
+      !this.writing.enabled &&
+      namasteSince > 0 &&
+      namasteSince !== this.endCardForHold &&
+      now - namasteSince >= FireworksApp.NAMASTE_CARD_MS
+    ) {
+      this.endCardForHold = namasteSince;
+      this.showEndCard();
+    }
+
     // Feed hands to the air-writing engine (finger / pencil)
     this.writing.update(this.vision.detectedHands, this.compositor.video, this.compositor.width, this.compositor.height, now);
 
@@ -366,6 +387,23 @@ class FireworksApp {
         this.writing.enabled ? [] : activeGestures,
         this.compositor.width,
         this.compositor.height
+      );
+    }
+
+    // 3b. While the end card is up, keep the sky celebrating (rockets + starbursts)
+    if (!this.finaleCenter.classList.contains('hidden') && now - this.lastCelebration > 550) {
+      this.lastCelebration = now;
+      const cw = this.compositor.width;
+      const ch = this.compositor.height;
+      const burst = Math.random() < 0.5;
+      this.director.handleGestures(
+        [
+          burst
+            ? { type: 'STARBURST', confidence: 1, triggerPoint: { x: cw * (0.1 + Math.random() * 0.8), y: ch * (0.25 + Math.random() * 0.35) }, handIndex: 5, isContinuous: false }
+            : { type: 'ROCKET', confidence: 1, triggerPoint: { x: cw * (0.1 + Math.random() * 0.8), y: ch * 0.85 }, handIndex: 5, isContinuous: false }
+        ],
+        cw,
+        ch
       );
     }
 

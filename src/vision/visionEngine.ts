@@ -26,6 +26,11 @@ export class VisionEngine {
   public activeGestures: DetectedGesture[] = [];
   public showDebug: boolean = false;
 
+  /** performance.now() when the current Namaste pose started, or 0 if not held */
+  public get namasteSince(): number {
+    return this.classifier.namasteSince;
+  }
+
   public async init(onProgress?: (msg: string) => void): Promise<void> {
     onProgress?.('Loading Vision WebAssembly...');
 

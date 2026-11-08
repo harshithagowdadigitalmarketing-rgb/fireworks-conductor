@@ -818,9 +818,10 @@ body {
   inset: 0;
   z-index: 30;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  background: linear-gradient(180deg, #14132a 0%, #2a1628 55%, #431a27 100%);
+  /* See-through: camera + fireworks stay visible; only a soft scrim keeps the text readable */
+  background: linear-gradient(180deg, rgba(10, 8, 24, 0.62) 0%, rgba(10, 8, 24, 0.38) 38%, rgba(10, 8, 24, 0.05) 62%, rgba(10, 8, 24, 0) 100%);
   text-align: center;
   cursor: pointer;
   transition: opacity 0.8s ease;
@@ -830,13 +831,13 @@ body {
 .end-card::before { inset: 2.7%; border: 2px solid #b8864b; }
 .end-card::after { inset: 3.4%; border: 1px solid rgba(255, 255, 255, 0.18); }
 
-.end-content { display: flex; flex-direction: column; align-items: center; gap: clamp(0.6rem, 2.2vh, 1.6rem); padding: 0 6%; }
+.end-content { display: flex; flex-direction: column; align-items: center; gap: clamp(0.4rem, 1.4vh, 1rem); padding: clamp(28px, 6.5vh, 80px) 6% 0; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75); }
 .end-logo-link { display: block; background: #fff; padding: clamp(4px, 0.6vw, 10px) clamp(8px, 1vw, 16px); line-height: 0; }
-.end-logo { height: clamp(70px, 17vh, 190px); width: auto; display: block; }
-.end-title { margin: clamp(0.4rem, 2vh, 1.4rem) 0 0; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(2.2rem, 7.4vw, 6.5rem); line-height: 1.1; color: #ffd698; letter-spacing: 0.01em; }
-.end-kannada { margin: 0; font-family: "Noto Sans Kannada", var(--font-ui); font-weight: 800; font-size: clamp(1.5rem, 5vw, 4.4rem); line-height: 1.25; color: #fff3dc; }
-.end-divider { width: clamp(120px, 22%, 420px); height: 1px; background: #b8864b; margin: clamp(0.4rem, 2vh, 1.4rem) 0; }
-.end-links { margin: 0; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.4rem clamp(0.8rem, 2vw, 2rem); font: 400 clamp(1rem, 2.4vw, 2.1rem) var(--font-ui); color: #fff3dc; }
+.end-logo { height: clamp(56px, 12vh, 130px); width: auto; display: block; }
+.end-title { margin: clamp(0.2rem, 1vh, 0.8rem) 0 0; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(2rem, 6vw, 5rem); line-height: 1.1; color: #ffd698; letter-spacing: 0.01em; }
+.end-kannada { margin: 0; font-family: "Noto Sans Kannada", var(--font-ui); font-weight: 800; font-size: clamp(1.3rem, 4vw, 3.4rem); line-height: 1.25; color: #fff3dc; }
+.end-divider { width: clamp(120px, 22%, 420px); height: 1px; background: #b8864b; margin: clamp(0.2rem, 1vh, 0.8rem) 0; }
+.end-links { margin: 0; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.4rem clamp(0.8rem, 2vw, 2rem); font: 500 clamp(0.95rem, 2vw, 1.7rem) var(--font-ui); color: #fff3dc; }
 .end-links a { color: #fff3dc; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s ease; }
 .end-links a:hover { border-bottom-color: #ffd698; }
 .end-sep { opacity: 0.7; }
@@ -845,3 +846,11 @@ body {
 .end-diya.left { left: 9.5%; }
 .end-diya.right { right: 9.5%; }
 @media (max-width: 640px) { .end-diya { bottom: 6%; width: 17vw; } .end-diya.left { left: 7%; } .end-diya.right { right: 7%; } }
+
+/* While the end card is open, tuck the controls away so the card, fireworks and camera are unobstructed */
+body:has(.end-card:not(.hidden)) .hud-container,
+body:has(.end-card:not(.hidden)) .corner-credits {
+  opacity: 0;
+  pointer-events: none !important;
+  transition: opacity 0.4s ease;
+}

@@ -20,6 +20,20 @@ export class GestureClassifier {
     GRAND_FINALE: 4000
   };
 
+  // Continuous Namaste tracking (for the end card): when the pose started, tolerating brief dropouts
+  public namasteSince = 0;
+  private namasteLastSeen = 0;
+  private readonly NAMASTE_DROPOUT_MS = 450;
+
+  private updateNamaste(pose: boolean, now: number): void {
+    if (pose) {
+      if (this.namasteSince === 0) this.namasteSince = now;
+      this.namasteLastSeen = now;
+    } else if (now - this.namasteLastSeen > this.NAMASTE_DROPOUT_MS) {
+      this.namasteSince = 0;
+    }
+  }
+
   private readonly HOLD_REQUIRED_MS = 100;
   private readonly NAMASTE_HOLD_MS = 180;
 
@@ -55,6 +69,8 @@ export class GestureClassifier {
         (h1.extendedFingers.index || h1.extendedFingers.middle) &&
         (h2.extendedFingers.index || h2.extendedFingers.middle);
 
+      this.updateNamaste(isPointingUp && isHandsTogether && isFingersOpen, now);
+
       if (isPointingUp && isHandsTogether && isFingersOpen) {
         const pending = this.pendingGesture.get(-1);
         if (!pending || pending.type !== 'GRAND_FINALE') {
@@ -81,6 +97,7 @@ export class GestureClassifier {
         this.pendingGesture.delete(-1);
       }
     } else {
+      this.updateNamaste(false, now);
       this.pendingGesture.delete(-1);
     }
 
