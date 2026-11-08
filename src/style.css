@@ -50,21 +50,40 @@ body {
   justify-content: center;
 }
 
-/* The whole experience lives in a 9:16 (reel / phone portrait) frame.
-   On a phone it fills the screen; on a desktop it is a centred portrait stage.
-   container-type lets the layout adapt to the frame width instead of the window. */
+/* Layout adapts to the device:
+   - Desktop / landscape: the stage fills the whole window.
+   - Phone / portrait: a 9:16 frame (reel ratio) that fills the screen.
+   - Desktop "Reel 9:16" toggle (body.reel-frame): centred 9:16 portrait stage for recording reels.
+   container-type lets the layout adapt to the stage width instead of the window. */
 #app {
   position: relative;
   flex: none;
-  width: min(100vw, calc(100vh * 9 / 16));
-  height: min(100vh, calc(100vw * 16 / 9));
-  width: min(100vw, calc(100dvh * 9 / 16));
-  height: min(100dvh, calc(100vw * 16 / 9));
+  width: 100vw;
+  height: 100vh;
+  width: 100vw;
+  height: 100dvh;
   overflow: hidden;
   background: var(--bg-gradient);
   container-type: inline-size;
   container-name: app;
   box-shadow: 0 0 0 1px rgba(36, 167, 223, 0.18), 0 0 60px rgba(0, 74, 173, 0.25);
+}
+
+@media (orientation: portrait) {
+  #app {
+    width: min(100vw, calc(100vh * 9 / 16));
+    height: min(100vh, calc(100vw * 16 / 9));
+    width: min(100vw, calc(100dvh * 9 / 16));
+    height: min(100dvh, calc(100vw * 16 / 9));
+  }
+  #btn-frame { display: none !important; }
+}
+
+body.reel-frame #app {
+  width: min(100vw, calc(100vh * 9 / 16));
+  height: min(100vh, calc(100vw * 16 / 9));
+  width: min(100vw, calc(100dvh * 9 / 16));
+  height: min(100dvh, calc(100vw * 16 / 9));
 }
 
 #webcam {
@@ -851,10 +870,10 @@ body {
 .end-content { display: flex; flex-direction: column; align-items: center; gap: clamp(0.4rem, 1.4vh, 1rem); padding: clamp(28px, 6.5vh, 80px) 6% 0; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75); }
 .end-logo-link { display: block; background: #fff; padding: clamp(4px, 1cqw, 10px) clamp(8px, 2cqw, 16px); line-height: 0; }
 .end-logo { height: clamp(56px, 12vh, 130px); width: auto; display: block; }
-.end-title { margin: clamp(0.2rem, 1vh, 0.8rem) 0 0; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(1.8rem, 11cqw, 4.4rem); line-height: 1.1; color: #ffd698; letter-spacing: 0.01em; }
-.end-kannada { margin: 0; font-family: "Noto Sans Kannada", var(--font-ui); font-weight: 800; font-size: clamp(1.2rem, 6.6cqw, 2.8rem); line-height: 1.25; color: #fff3dc; }
+.end-title { margin: clamp(0.2rem, 1vh, 0.8rem) 0 0; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(1.8rem, 11cqw, 5rem); line-height: 1.1; color: #ffd698; letter-spacing: 0.01em; }
+.end-kannada { margin: 0; font-family: "Noto Sans Kannada", var(--font-ui); font-weight: 800; font-size: clamp(1.2rem, 6.6cqw, 3.2rem); line-height: 1.25; color: #fff3dc; }
 .end-divider { width: clamp(120px, 22%, 420px); height: 1px; background: #b8864b; margin: clamp(0.2rem, 1vh, 0.8rem) 0; }
-.end-links { margin: 0; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.4rem clamp(0.8rem, 3cqw, 2rem); font: 500 clamp(0.9rem, 3.6cqw, 1.45rem) var(--font-ui); color: #fff3dc; }
+.end-links { margin: 0; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.4rem clamp(0.8rem, 3cqw, 2rem); font: 500 clamp(0.9rem, 3.6cqw, 1.6rem) var(--font-ui); color: #fff3dc; }
 .end-links a { color: #fff3dc; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s ease; }
 .end-links a:hover { border-bottom-color: #ffd698; }
 .end-sep { opacity: 0.7; }
@@ -875,8 +894,9 @@ body:has(.end-card:not(.hidden)) .corner-credits {
 @container app (max-width: 560px) {
   .hud-container { padding: 0.75rem 0.75rem; }
   .hud-header { flex-wrap: wrap; gap: 0.55rem; }
-  .header-actions { order: 3; width: 100%; justify-content: center; gap: 0.5rem; }
-  .action-btn { padding: 0.42rem 0.8rem; }
+  .header-actions { order: 3; width: 100%; justify-content: center; flex-wrap: wrap; gap: 0.45rem; }
+  .action-btn { padding: 0.42rem 0.7rem; white-space: nowrap; }
+  #btn-frame .btn-label { display: none; }
   .write-tools { top: 8.4rem; width: calc(100% - 1.5rem); }
   .write-hint { font-size: 0.72rem; }
 }

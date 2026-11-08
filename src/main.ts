@@ -156,6 +156,18 @@ class FireworksApp {
     };
     this.audioBtn.addEventListener('click', toggleAudio);
 
+    // 3a. Desktop: toggle the centred 9:16 reel frame (phones are always 9:16 portrait)
+    const frameBtn = document.getElementById('btn-frame') as HTMLElement;
+    const setFrame = (on: boolean) => {
+      document.body.classList.toggle('reel-frame', on);
+      frameBtn.classList.toggle('btn-active', on);
+      try { localStorage.setItem('reelFrame', on ? '1' : '0'); } catch { /* storage unavailable */ }
+      window.dispatchEvent(new Event('resize'));
+    };
+    const toggleFrame = () => setFrame(!document.body.classList.contains('reel-frame'));
+    frameBtn.addEventListener('click', toggleFrame);
+    try { if (localStorage.getItem('reelFrame') === '1') setFrame(true); } catch { /* ignore */ }
+
     // 3b. Air-writing mode (W key): write with finger / pencil, mouse as fallback
     const writeBtn = document.getElementById('btn-write') as HTMLElement;
     const writeTools = document.getElementById('write-tools') as HTMLElement;
@@ -266,6 +278,7 @@ class FireworksApp {
       if (e.key === 's' || e.key === 'S') takeSnap();
       if (e.key === 'r' || e.key === 'R') toggleRecording();
       if (e.key === 'w' || e.key === 'W') toggleWrite();
+      if (e.key === 'f' || e.key === 'F') toggleFrame();
       if (this.writing.enabled) {
         if (e.key === 'x' || e.key === 'X') this.writing.clear();
         if (e.key === 'z' || e.key === 'Z') this.writing.undo();
