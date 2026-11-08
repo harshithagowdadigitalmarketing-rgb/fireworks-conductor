@@ -3,8 +3,9 @@
 > **Turn your hands into authentic Deepavali fireworks.**
 > Wave, point, spin, spread — every gesture ignites a distinct firework directly over your webcam feed in real-time. Record reels, download festive postcards, and conduct the night sky.
 
-👉 **Live Demo:** [https://gesture-fireworks.netlify.app](https://gesture-fireworks.netlify.app)  
-📦 **Repository:** [https://github.com/thedevangvishnu/fireworks-conductor](https://github.com/thedevangvishnu/fireworks-conductor)
+🌐 **Website:** [odee.co.in](https://odee.co.in/)  
+📸 **Instagram:** [@odee.io](https://www.instagram.com/odee.io)  
+📦 **Repository:** [https://github.com/harshithagowdadigitalmarketing-rgb/fireworks-conductor](https://github.com/harshithagowdadigitalmarketing-rgb/fireworks-conductor)
 
 ---
 
@@ -12,7 +13,7 @@
 
 ```bash
 # Clone the repository
-git clone git@github.com:thedevangvishnu/fireworks-conductor.git
+git clone https://github.com/harshithagowdadigitalmarketing-rgb/fireworks-conductor.git
 cd fireworks-conductor
 
 # Install dependencies (requires Node.js 18+)
@@ -73,4 +74,4 @@ Open `http://localhost:5173` in Google Chrome or Arc. Grant camera permission wh
 
 ## 📄 License
 
-MIT © Devang Vishnu
+MIT © Devang Vishnu (original Fireworks Conductor) · © ODEE (modifications and branding)
