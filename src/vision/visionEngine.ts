@@ -34,41 +34,39 @@ export class VisionEngine {
   public async init(onProgress?: (msg: string) => void): Promise<void> {
     onProgress?.('Loading Vision WebAssembly...');
 
-    let vision;
-    try {
-      vision = await FilesetResolver.forVisionTasks(LOCAL_WASM);
-    } catch {
-      console.warn('Local WASM failed, falling back to CDN...');
-      vision = await FilesetResolver.forVisionTasks(CDN_WASM);
-    }
-
-    onProgress?.('Loading Hand Landmarker model...');
-    let landmarkerInstance: HandLandmarker | null = null;
-
-    // Try GPU with local model, fallback to CDN, fallback to CPU
+    // Try the bundled wasm first, then the CDN copy. forVisionTasks() does not check that the
+    // files exist, so the fallback has to happen around the landmarker creation, not around it.
+    const wasmSources = [LOCAL_WASM, CDN_WASM];
     const modelPaths = [LOCAL_MODEL, CDN_MODEL];
     const delegates: ('GPU' | 'CPU')[] = ['GPU', 'CPU'];
+    let landmarkerInstance: HandLandmarker | null = null;
 
-    for (const modelPath of modelPaths) {
-      for (const delegate of delegates) {
-        try {
-          landmarkerInstance = await HandLandmarker.createFromOptions(vision, {
-            baseOptions: {
-              modelAssetPath: modelPath,
-              delegate
-            },
-            runningMode: 'VIDEO',
-            numHands: 2,
-            minHandDetectionConfidence: 0.55,
-            minHandPresenceConfidence: 0.55,
-            minTrackingConfidence: 0.55
-          });
-          if (landmarkerInstance) break;
-        } catch (e) {
-          console.warn(`Landmarker init attempt failed (${modelPath}, ${delegate}):`, e);
+    onProgress?.('Loading Hand Landmarker model...');
+    outer: for (const wasmSource of wasmSources) {
+      let vision;
+      try {
+        vision = await FilesetResolver.forVisionTasks(wasmSource);
+      } catch (e) {
+        console.warn(`WASM source failed (${wasmSource}):`, e);
+        continue;
+      }
+      for (const modelPath of modelPaths) {
+        for (const delegate of delegates) {
+          try {
+            landmarkerInstance = await HandLandmarker.createFromOptions(vision, {
+              baseOptions: { modelAssetPath: modelPath, delegate },
+              runningMode: 'VIDEO',
+              numHands: 2,
+              minHandDetectionConfidence: 0.55,
+              minHandPresenceConfidence: 0.55,
+              minTrackingConfidence: 0.55
+            });
+            if (landmarkerInstance) break outer;
+          } catch (e) {
+            console.warn(`Landmarker init attempt failed (${wasmSource}, ${modelPath}, ${delegate}):`, e);
+          }
         }
       }
-      if (landmarkerInstance) break;
     }
 
     if (!landmarkerInstance) {
