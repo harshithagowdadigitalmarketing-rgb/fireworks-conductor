@@ -900,3 +900,11 @@ body:has(.end-card:not(.hidden)) .corner-credits {
   .write-tools { top: 8.4rem; width: calc(100% - 1.5rem); }
   .write-hint { font-size: 0.72rem; }
 }
+
+/* The end card is painted on the canvas (so reels and postcards include it); the DOM card only supplies layout and the clickable links. */
+.end-card.canvas-drawn { background: none; }
+.end-card.canvas-drawn::before,
+.end-card.canvas-drawn::after { display: none; }
+.end-card.canvas-drawn .end-content,
+.end-card.canvas-drawn .end-diya { opacity: 0; }
+body:has(.end-card:not(.hidden)) .vignette-overlay { opacity: 0; transition: opacity 0.4s ease; }

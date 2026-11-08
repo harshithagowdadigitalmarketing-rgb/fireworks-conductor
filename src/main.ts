@@ -5,6 +5,7 @@ import { FireworkDirector } from './fireworks/fireworkDirector';
 import { PyroAudioEngine } from './audio/pyroAudioEngine';
 import { CaptureEngine } from './capture/captureEngine';
 import { WritingEngine } from './writing/writingEngine';
+import { EndCardRenderer } from './endcard/endCardRenderer';
 
 class FireworksApp {
   private compositor: VideoCompositor;
@@ -25,6 +26,8 @@ class FireworksApp {
   private endCardTimer: number = 0;
   private endCardForHold: number = -1;
   private lastCelebration: number = 0;
+  private endCardShownAt: number = 0;
+  private endCardRenderer: EndCardRenderer;
   private static readonly NAMASTE_CARD_MS = 3000;
 
   // Fog-Mirror Style Reel Preview Elements
@@ -78,6 +81,7 @@ class FireworksApp {
     this.audio = new PyroAudioEngine();
     this.director = new FireworkDirector();
     this.capture = new CaptureEngine(canvas);
+    this.endCardRenderer = new EndCardRenderer(this.finaleCenter, document.getElementById('app') as HTMLElement);
 
     // Audio Trigger Callback
     this.director.setSoundCallback((soundType, intensity) => {
@@ -342,6 +346,7 @@ class FireworksApp {
       // Fresh grand barrage as the card appears; steady celebration continues while it is up
       this.triggerGrandFinale(this.compositor.width, this.compositor.height);
       this.lastCelebration = performance.now();
+      this.endCardShownAt = performance.now();
     }
     this.finaleCenter.classList.remove('hidden');
     window.clearTimeout(this.endCardTimer);
@@ -425,6 +430,16 @@ class FireworksApp {
 
     // 4b. Draw written ink on top of fireworks (included in screenshots & recordings)
     this.writing.render(this.compositor.ctx);
+
+    // 4c. End card is painted onto the canvas so recordings and screenshots include it
+    if (!this.finaleCenter.classList.contains('hidden')) {
+      this.endCardRenderer.draw(
+        this.compositor.ctx,
+        this.compositor.width,
+        this.compositor.height,
+        (now - this.endCardShownAt) / 700
+      );
+    }
 
     // 5. Draw Debug skeleton if active
     this.vision.drawDebugSkeleton(this.compositor.ctx);
