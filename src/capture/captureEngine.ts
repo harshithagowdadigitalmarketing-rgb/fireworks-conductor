@@ -23,8 +23,11 @@ export class CaptureEngine {
   public latestVideoUrl: string | null = null;
   public selectedExtension: string = 'mp4';
 
+  private logo: HTMLImageElement = new Image();
+
   constructor(canvas: HTMLCanvasElement, callbacks?: CaptureCallbacks) {
     this.canvas = canvas;
+    this.logo.src = '/images/odee-logo-wide.png';
     if (callbacks) this.callbacks = callbacks;
   }
 
@@ -165,13 +168,39 @@ export class CaptureEngine {
     tCtx.shadowColor = 'rgba(255, 215, 0, 0.8)';
     tCtx.shadowBlur = 15;
     tCtx.font = `bold ${Math.max(22, tempCanvas.width * 0.024)}px "Cinzel", serif`;
-    tCtx.fillText('✨ Happy Diwali ✨', tempCanvas.width - pad, tempCanvas.height - pad - 18);
+    const w = tempCanvas.width;
+    const h = tempCanvas.height;
+    tCtx.fillText('✨ Happy Deepavali ✨', w - pad, h - pad - 64);
+    tCtx.shadowBlur = 8;
+    tCtx.fillStyle = '#FFFFFF';
+    tCtx.font = `800 ${Math.max(16, w * 0.017)}px "Noto Sans Kannada", sans-serif`;
+    tCtx.fillText('ದೀಪಾವಳಿಯ ಶುಭಾಶಯಗಳು', w - pad, h - pad - 36);
+    tCtx.fillStyle = '#8FD3F4';
+    tCtx.shadowBlur = 0;
+    tCtx.font = `600 ${Math.max(12, w * 0.012)}px "Plus Jakarta Sans", sans-serif`;
+    tCtx.fillText('odee.co.in  •  @odee.io', w - pad, h - pad - 14);
+    tCtx.fillStyle = '#E2E8F0';
 
     tCtx.fillStyle = '#E2E8F0';
     tCtx.shadowBlur = 0;
     tCtx.font = `${Math.max(12, tempCanvas.width * 0.012)}px "Plus Jakarta Sans", sans-serif`;
     tCtx.fillText('Fireworks Conductor 2026', tempCanvas.width - pad, tempCanvas.height - pad);
     tCtx.restore();
+
+    // ODEE logo on a white rounded tile, bottom-left
+    if (this.logo.complete && this.logo.naturalWidth > 0) {
+      const lh = Math.max(56, tempCanvas.height * 0.09);
+      const lw = lh * (this.logo.naturalWidth / this.logo.naturalHeight);
+      const lx = pad;
+      const ly = tempCanvas.height - pad - lh;
+      tCtx.save();
+      tCtx.fillStyle = '#FFFFFF';
+      tCtx.beginPath();
+      tCtx.roundRect(lx - 8, ly - 8, lw + 16, lh + 16, 14);
+      tCtx.fill();
+      tCtx.drawImage(this.logo, lx, ly, lw, lh);
+      tCtx.restore();
+    }
 
     tempCanvas.toBlob((blob) => {
       if (!blob) return;

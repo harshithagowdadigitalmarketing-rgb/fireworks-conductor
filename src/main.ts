@@ -315,10 +315,10 @@ class FireworksApp {
     this.finaleTimeout = window.setTimeout(() => {
       this.finaleCenter.classList.remove('hidden');
 
-      // Keep it up for 6.5 seconds of golden celebration, then fade out smoothly
+      // Keep the end card up long enough to read it and click the ODEE links, then fade out
       window.setTimeout(() => {
         this.finaleCenter.classList.add('hidden');
-      }, 6500);
+      }, 14000);
     }, 1400);
   }
 
