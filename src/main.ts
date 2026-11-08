@@ -125,6 +125,11 @@ class FireworksApp {
     };
     this.restoreHudBtn.addEventListener('click', toggleCreatorMode);
 
+    // End card: click anywhere (except its links) to close
+    this.finaleCenter.addEventListener('click', (e) => {
+      if (!(e.target as HTMLElement).closest('a')) this.finaleCenter.classList.add('hidden');
+    });
+
     // 2. Debug Tracker Skeleton (D key)
     const toggleDebug = () => {
       this.vision.showDebug = !this.vision.showDebug;
@@ -248,6 +253,7 @@ class FireworksApp {
     // Global Keybindings
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
+        this.finaleCenter.classList.add('hidden');
         if (this.reelDialog.open) closeFullDialog();
         else this.dismissReelPreview();
       }
@@ -310,7 +316,7 @@ class FireworksApp {
       h
     );
 
-    // After 1.4 seconds of rockets filling the sky, display the majestic "HAPPY DEEPAWALI" centerpiece!
+    // Let the rockets light the sky first, then show the clean Happy Deepavali end card
     window.clearTimeout(this.finaleTimeout);
     this.finaleTimeout = window.setTimeout(() => {
       this.finaleCenter.classList.remove('hidden');
@@ -318,8 +324,8 @@ class FireworksApp {
       // Keep the end card up long enough to read it and click the ODEE links, then fade out
       window.setTimeout(() => {
         this.finaleCenter.classList.add('hidden');
-      }, 14000);
-    }, 1400);
+      }, 15000);
+    }, 4500);
   }
 
   private async init(): Promise<void> {

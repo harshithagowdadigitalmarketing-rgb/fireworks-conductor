@@ -82,172 +82,6 @@ body {
 }
 
 /* ============================================================
-   GRAND FINALE CENTERPIECE ("HAPPY DEEPAWALI")
-   ============================================================ */
-.grand-finale-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1);
-  z-index: 8;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  text-align: center;
-  transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.grand-finale-center.hidden {
-  opacity: 0;
-  transform: translate(-50%, -46%) scale(0.82);
-  pointer-events: none;
-}
-
-.finale-sparkle-aura {
-  position: absolute;
-  width: 620px;
-  height: 380px;
-  background: radial-gradient(circle, rgba(36, 167, 223, 0.35) 0%, rgba(0, 74, 173, 0.30) 50%, transparent 75%);
-  filter: blur(36px);
-  pointer-events: none;
-  animation: pulse-aura 2.4s infinite alternate ease-in-out;
-}
-
-.finale-mandala-ring {
-  position: absolute;
-  width: 440px;
-  height: 440px;
-  border-radius: 50%;
-  border: 1.5px dashed rgba(36, 167, 223, 0.32);
-  box-shadow: 0 0 40px rgba(36, 167, 223, 0.25), inset 0 0 35px rgba(0, 74, 173, 0.25);
-  pointer-events: none;
-  animation: spin-mandala 40s linear infinite;
-}
-
-@keyframes spin-mandala {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes pulse-aura {
-  0% { transform: scale(0.92); opacity: 0.65; }
-  100% { transform: scale(1.18); opacity: 1; }
-}
-
-/* Marigold Garland Arch */
-.marigold-garland {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.2rem;
-  margin-bottom: 0.5rem;
-  z-index: 2;
-}
-
-.garland-flower {
-  width: 48px;
-  height: 48px;
-  filter: drop-shadow(0 4px 12px rgba(251, 125, 4, 0.65));
-  animation: sway-flower 3s infinite alternate ease-in-out;
-}
-
-.garland-flower.f1 { transform: translateY(12px) rotate(-10deg); animation-delay: 0s; }
-.garland-flower.f2 { transform: translateY(3px) rotate(-4deg); animation-delay: 0.2s; }
-.garland-flower.f3 { transform: translateY(-4px) rotate(0deg); width: 56px; height: 56px; animation-delay: 0.4s; }
-.garland-flower.f4 { transform: translateY(3px) rotate(4deg); animation-delay: 0.6s; }
-.garland-flower.f5 { transform: translateY(12px) rotate(10deg); animation-delay: 0.8s; }
-
-@keyframes sway-flower {
-  0% { transform: translateY(0) rotate(0deg) scale(0.98); }
-  100% { transform: translateY(-4px) rotate(4deg) scale(1.04); }
-}
-
-/* Festive Banner Group */
-.finale-banner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.8rem;
-  z-index: 2;
-}
-
-.banner-diya {
-  width: clamp(60px, 6.5vw, 88px);
-  height: clamp(60px, 6.5vw, 88px);
-  filter: drop-shadow(0 6px 22px rgba(36, 167, 223, 0.95)) drop-shadow(0 0 10px rgba(251, 125, 4, 0.7));
-  animation: flicker-banner-diya 2s infinite alternate ease-in-out;
-}
-
-.banner-diya.left {
-  animation-delay: 0.2s;
-}
-
-.banner-diya.right {
-  transform: scaleX(-1);
-  animation: flicker-banner-diya-right 2s infinite alternate ease-in-out;
-  animation-delay: 0.7s;
-}
-
-@keyframes flicker-banner-diya {
-  0% { transform: scale(0.95); filter: drop-shadow(0 4px 16px rgba(36, 167, 223, 0.85)); }
-  100% { transform: scale(1.05); filter: drop-shadow(0 10px 28px rgba(251, 125, 4, 1)); }
-}
-
-@keyframes flicker-banner-diya-right {
-  0% { transform: scaleX(-1) scale(0.95); filter: drop-shadow(0 4px 16px rgba(36, 167, 223, 0.85)); }
-  100% { transform: scaleX(-1) scale(1.05); filter: drop-shadow(0 10px 28px rgba(251, 125, 4, 1)); }
-}
-
-.finale-text-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.finale-pretitle {
-  font-family: var(--font-festive);
-  font-size: clamp(0.9rem, 2vw, 1.4rem);
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  color: #BFE6F7;
-  text-shadow: 0 0 16px rgba(36, 167, 223, 0.85);
-  margin-bottom: 0.2rem;
-}
-
-.finale-heading {
-  font-family: var(--font-festive);
-  font-size: clamp(2.8rem, 7.5vw, 6.2rem);
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  line-height: 1.05;
-  background: linear-gradient(180deg, #ffffff 0%, #BFE6F7 22%, #24A7DF 50%, #FB7D04 80%, #0966AB 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 20px rgba(36, 167, 223, 0.95))
-         drop-shadow(0 0 50px rgba(251, 125, 4, 0.8))
-         drop-shadow(0 0 90px rgba(194, 24, 91, 0.6));
-  animation: shimmer-text 2.8s infinite alternate ease-in-out;
-  white-space: nowrap;
-}
-
-@keyframes shimmer-text {
-  0% { filter: drop-shadow(0 0 18px rgba(36, 167, 223, 0.85)) drop-shadow(0 0 45px rgba(251, 125, 4, 0.7)); }
-  100% { filter: drop-shadow(0 0 32px rgba(150, 214, 242, 1)) drop-shadow(0 0 75px rgba(0, 74, 173, 0.9)); }
-}
-
-.finale-subheading {
-  font-family: var(--font-ui);
-  font-size: clamp(0.9rem, 1.8vw, 1.3rem);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: #fff9e6;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9), 0 0 20px rgba(36, 167, 223, 0.7);
-  margin-top: 0.5rem;
-}
-
-/* ============================================================
    HUD CONTAINER & TOP BAR (MINIMAL, POPPY)
    ============================================================ */
 .hud-container {
@@ -279,7 +113,7 @@ body {
   pointer-events: auto;
 }
 
-/* Festive Deepawali Pill */
+/* Festive Deepavali Pill */
 .festive-badge {
   display: flex;
   align-items: center;
@@ -976,58 +810,38 @@ body {
 .write-mini:hover { border-color: var(--brand-orange); }
 #stage.writing-cursor { cursor: crosshair; }
 
-/* ODEE end card (finale): Kannada greeting, logo and links */
-.finale-kannada {
-  margin: 0.15rem 0 0.1rem;
-  font-family: "Noto Sans Kannada", var(--font-ui);
-  font-weight: 800;
-  font-size: clamp(1.3rem, 3.4vw, 2.6rem);
-  color: #fff;
-  text-shadow: 0 0 18px rgba(36, 167, 223, 0.95), 0 0 36px rgba(251, 125, 4, 0.6), 0 2px 10px rgba(0, 0, 0, 0.8);
-}
-
-.finale-brand {
+/* ============================================================
+   END CARD (clean, full screen)
+   ============================================================ */
+.end-card {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem 1.4rem;
-  margin-top: 1.1rem;
-  pointer-events: auto;
+  background: linear-gradient(180deg, #14132a 0%, #2a1628 55%, #431a27 100%);
+  text-align: center;
+  cursor: pointer;
+  transition: opacity 0.8s ease;
 }
+.end-card.hidden { opacity: 0; pointer-events: none; visibility: hidden; transition: opacity 0.5s ease, visibility 0s linear 0.5s; }
+.end-card::before, .end-card::after { content: ""; position: absolute; pointer-events: none; }
+.end-card::before { inset: 2.7%; border: 2px solid #b8864b; }
+.end-card::after { inset: 3.4%; border: 1px solid rgba(255, 255, 255, 0.18); }
 
-.finale-logo-link {
-  display: block;
-  padding: 0.5rem 0.9rem;
-  border-radius: 16px;
-  background: #fff;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), 0 0 28px rgba(36, 167, 223, 0.55);
-  transition: transform 0.2s ease;
-}
-.finale-logo-link:hover { transform: scale(1.04); }
+.end-content { display: flex; flex-direction: column; align-items: center; gap: clamp(0.6rem, 2.2vh, 1.6rem); padding: 0 6%; }
+.end-logo-link { display: block; background: #fff; padding: clamp(4px, 0.6vw, 10px) clamp(8px, 1vw, 16px); line-height: 0; }
+.end-logo { height: clamp(70px, 17vh, 190px); width: auto; display: block; }
+.end-title { margin: clamp(0.4rem, 2vh, 1.4rem) 0 0; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(2.2rem, 7.4vw, 6.5rem); line-height: 1.1; color: #ffd698; letter-spacing: 0.01em; }
+.end-kannada { margin: 0; font-family: "Noto Sans Kannada", var(--font-ui); font-weight: 800; font-size: clamp(1.5rem, 5vw, 4.4rem); line-height: 1.25; color: #fff3dc; }
+.end-divider { width: clamp(120px, 22%, 420px); height: 1px; background: #b8864b; margin: clamp(0.4rem, 2vh, 1.4rem) 0; }
+.end-links { margin: 0; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.4rem clamp(0.8rem, 2vw, 2rem); font: 400 clamp(1rem, 2.4vw, 2.1rem) var(--font-ui); color: #fff3dc; }
+.end-links a { color: #fff3dc; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s ease; }
+.end-links a:hover { border-bottom-color: #ffd698; }
+.end-sep { opacity: 0.7; }
 
-.finale-logo {
-  display: block;
-  height: clamp(54px, 9vw, 92px);
-  width: auto;
-}
-
-.finale-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.finale-link {
-  padding: 0.45rem 1.1rem;
-  border-radius: 999px;
-  background: var(--glass-bg);
-  border: 1.5px solid var(--brand-sky);
-  color: #fff;
-  text-decoration: none;
-  font: 700 clamp(0.9rem, 1.8vw, 1.15rem) var(--font-ui);
-  letter-spacing: 0.02em;
-  box-shadow: 0 0 16px rgba(36, 167, 223, 0.35);
-  transition: all 0.2s ease;
-}
-.finale-link:hover { border-color: var(--brand-orange); box-shadow: 0 0 22px rgba(251, 125, 4, 0.55); transform: translateX(2px); }
+.end-diya { position: absolute; bottom: 14%; width: clamp(54px, 10vw, 200px); height: auto; pointer-events: none; }
+.end-diya.left { left: 9.5%; }
+.end-diya.right { right: 9.5%; }
+@media (max-width: 640px) { .end-diya { bottom: 6%; width: 17vw; } .end-diya.left { left: 7%; } .end-diya.right { right: 7%; } }

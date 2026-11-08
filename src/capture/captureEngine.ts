@@ -146,7 +146,7 @@ export class CaptureEngine {
     a.href = this.latestVideoUrl;
     const now = new Date();
     const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, 19);
-    a.download = filename || `Deepawali-Fireworks-${timestamp}.${this.selectedExtension}`;
+    a.download = filename || `Deepavali-Fireworks-${timestamp}.${this.selectedExtension}`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -170,7 +170,7 @@ export class CaptureEngine {
     tCtx.font = `bold ${Math.max(22, tempCanvas.width * 0.024)}px "Cinzel", serif`;
     const w = tempCanvas.width;
     const h = tempCanvas.height;
-    tCtx.fillText('✨ Happy Deepawali ✨', w - pad, h - pad - 64);
+    tCtx.fillText('Happy Deepavali', w - pad, h - pad - 64);
     tCtx.shadowBlur = 8;
     tCtx.fillStyle = '#FFFFFF';
     tCtx.font = `800 ${Math.max(16, w * 0.017)}px "Noto Sans Kannada", sans-serif`;
@@ -178,7 +178,7 @@ export class CaptureEngine {
     tCtx.fillStyle = '#8FD3F4';
     tCtx.shadowBlur = 0;
     tCtx.font = `600 ${Math.max(12, w * 0.012)}px "Plus Jakarta Sans", sans-serif`;
-    tCtx.fillText('odee.co.in  •  @odee.io', w - pad, h - pad - 14);
+    tCtx.fillText('odee.co.in  |  Instagram @odee.io', w - pad, h - pad - 14);
     tCtx.fillStyle = '#E2E8F0';
 
     tCtx.fillStyle = '#E2E8F0';
@@ -209,7 +209,7 @@ export class CaptureEngine {
       a.href = url;
       const now = new Date();
       const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, 19);
-      a.download = `Deepawali-Postcard-${timestamp}.png`;
+      a.download = `Deepavali-Postcard-${timestamp}.png`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

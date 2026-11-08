@@ -1,6 +1,6 @@
-# 🎆 Fireworks Conductor (Deepawali 2026 Edition)
+# 🎆 Fireworks Conductor (Deepavali 2026 Edition)
 
-> **Turn your hands into authentic Deepawali fireworks.**
+> **Turn your hands into authentic Deepavali fireworks.**
 > Wave, point, spin, spread — every gesture ignites a distinct firework directly over your webcam feed in real-time. Record reels, download festive postcards, and conduct the night sky.
 
 👉 **Live Demo:** [https://gesture-fireworks.netlify.app](https://gesture-fireworks.netlify.app)  
@@ -35,7 +35,7 @@ Open `http://localhost:5173` in Google Chrome or Arc. Grant camera permission wh
 | **3** | **Starburst (Aerial Shell)** | ✋ **Open palm (5 spread)** | Instant radial explosive detonation originating at palm center; dual concentric rings (white-hot core + chromatic perimeter) | Sharp initial pop $\to$ deep $40\text{Hz}$ sub-bass boom |
 | **4** | **Roman Candle** | ✌️ **Peace sign (Index + Middle)** | 5 rapid sequential fireballs (Ruby, Emerald, Gold, Blue, Violet) shooting upward, each bursting into 35 twinkling stars | Crisp rhythmic "fwoomp" pops |
 | **5** | **Phooljhadi (Sparkler)** | 👌 **Pinch (Thumb + Index)** | Continuous crackling sparkler following pinch coordinates with branching jitter sparks; enables drawing glowing shapes in mid-air | Granular micro-impulse crackler modulated by hand movement |
-| **6** | **Grand Finale** | 🙏 **Namaste (joined hands)** | Multi-shell salvo cascading across the entire screen, culminating in a glowing "HAPPY DEEPAWALI" centerpiece with ceremonial diyas | Staggered barrage of rocket launches and thunderous booms |
+| **6** | **Grand Finale** | 🙏 **Namaste (joined hands)** | Multi-shell salvo cascading across the entire screen, culminating in a glowing "HAPPY DEEPAVALI" centerpiece with ceremonial diyas | Staggered barrage of rocket launches and thunderous booms |
 
 ---
 
@@ -43,7 +43,7 @@ Open `http://localhost:5173` in Google Chrome or Arc. Grant camera permission wh
 
 - **`H` (Creator Mode):** Toggles all UI overlays off for recording clean video reels.
 - **`R` (Record Reel):** Toggles in-browser video recording (combines canvas video + procedural audio into a ready-to-share `.webm` reel, max 30s).
-- **`S` (Postcard Snap):** Captures high-res PNG photo with embossed gold `✨ Happy Deepawali ✨` festive watermark.
+- **`S` (Postcard Snap):** Captures high-res PNG photo with embossed gold a clean `Happy Deepavali` watermark with the ODEE logo and links.
 - **`D` (Debug Tracker):** Toggles MediaPipe skeletal bone wireframe and landmark dots.
 - **`M` (Mute):** Mutes/unmutes procedural sound synthesis.
 - **`1` – `7` (Manual Triggers):** Direct keyboard triggers for testing each firework type.
